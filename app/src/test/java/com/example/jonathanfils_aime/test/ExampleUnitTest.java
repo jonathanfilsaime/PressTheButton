@@ -1,4 +1,4 @@
-package com.example.jonathanfils_aime.pressthebutton;
+package com.example.jonathanfils_aime.test;
 
 import org.junit.Test;
 
