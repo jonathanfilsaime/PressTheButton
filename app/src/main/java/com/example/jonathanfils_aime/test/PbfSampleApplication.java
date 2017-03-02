@@ -29,10 +29,10 @@ public class PbfSampleApplication extends Application {
         button.addEventListener(new FlicButtonAdapter() {
             @Override
             public void onButtonUpOrDown(FlicButton button, boolean wasQueued, int timeDiff, boolean isUp, boolean isDown) {
-                if (isDown) {
-                    Toast.makeText(getApplicationContext(), "Button " + button + " was pressed", Toast.LENGTH_SHORT).show();
-                }
+
+
             }
+
         });
     }
 }

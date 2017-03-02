@@ -4,7 +4,9 @@ import android.Manifest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +18,12 @@ import io.flic.poiclib.FlicButtonMode;
 import io.flic.poiclib.FlicManager;
 import io.flic.poiclib.FlicScanWizard;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    public static int amount = 0;
+    public static ProgressBar progressBar;
+    public static TextView progress;
 
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
@@ -25,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progress = (TextView) findViewById(R.id.progress) ;
 
         requestPermissions(new String[] {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
                 Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 4);
@@ -32,7 +41,13 @@ public class MainActivity extends AppCompatActivity {
         for (FlicButton button : FlicManager.getManager().getKnownButtons()) {
             setupEventListenerForButtonInActivity(button);
         }
+
+        progressBar.setProgress(0);
+        progress.setText("$" + amount);
+        
+
     }
+
 
     @Override
     protected void onDestroy() {
@@ -50,13 +65,30 @@ public class MainActivity extends AppCompatActivity {
     private void setupEventListenerForButtonInActivity(FlicButton button) {
         FlicButtonListener listener = new FlicButtonAdapter() {
             @Override
-            public void onButtonUpOrDown(FlicButton button, boolean wasQueued, int timeDiff, boolean isUp, boolean isDown) {
-                ((TextView)findViewById(R.id.textView)).setText(isUp ? "Up" : "Down");
+            public void onButtonSingleOrDoubleClickOrHold(FlicButton button, boolean wasQueued, int timeDiff,
+                                                          boolean isSingleClick, boolean isDoubleClick, boolean isHold){
+                if(isSingleClick){
+                    Toast.makeText(getApplicationContext(), "$2 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
+                    amount += 2;
+
+                } else if(isDoubleClick){
+                    Toast.makeText(getApplicationContext(), "$3 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
+                    amount += 3;
+                } else if (isHold){
+                    Toast.makeText(getApplicationContext(), "$5 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
+                    amount += 5;
+                } else {
+                    Toast.makeText(getApplicationContext(), "Something is broken", Toast.LENGTH_SHORT).show();
+                }
+
+                progressBar.setProgress(amount);
+                progress.setText("$" + amount);
             }
+
         };
+
         button.addEventListener(listener);
         button.setTemporaryMode(FlicButtonMode.SuperActive);
-
         // Save the event listener so we can remove it later
         listeners.put(button, listener);
     }
@@ -97,3 +129,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+
+
+

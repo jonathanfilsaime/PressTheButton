@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="io.flic.pbfsample.MainActivity">
+    tools:context="com.example.jonathanfils_aime.test.MainActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -33,4 +33,28 @@
         android:layout_below="@+id/scanNewButton"
         android:layout_alignParentStart="true"
         android:id="@+id/scanWizardStatus"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="20"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft=""
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scanNewButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="120dp"
+        android:id="@+id/progress"/>
+
+
+
+
 </RelativeLayout>
