@@ -1,57 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.jonathanfils_aime.test"
-xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.jonathanfils_aime.test">
 
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-    android:name=".PbfSampleApplication"
-    android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
+        android:name=".PbfSampleApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-    <service
-        android:name=".PbfSampleService"
-        android:enabled="true"
-        android:exported="false" >
-    </service>
+        <service
+            android:name=".PbfSampleService"
+            android:enabled="true"
+            android:exported="false"></service>
 
-    <receiver
-        android:name=".PbfSampleService$BootUpReceiver"
-        android:enabled="true"
-        android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <receiver
+            android:name=".PbfSampleService$BootUpReceiver"
+            android:enabled="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
 
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-    </receiver>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".PbfSampleService$UpdateReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
+                <data
+                    android:path="io.flic.PbfSample"
+                    android:scheme="package" />
 
-    <receiver
-        android:name=".PbfSampleService$UpdateReceiver"
-        android:enabled="true">
-        <intent-filter>
-            <action android:name="android.intent.action.PACKAGE_REPLACED" />
-            <data
-                android:path="io.flic.PbfSample"
-                android:scheme="package" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </receiver>
-</application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".firstScreen"></activity>
+    </application>
 
 </manifest>

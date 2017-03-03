@@ -1,6 +1,7 @@
 package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,23 +29,26 @@ public class MainActivity extends AppCompatActivity {
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progress = (TextView) findViewById(R.id.progress) ;
 
         requestPermissions(new String[] {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
                 Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 4);
 
-        for (FlicButton button : FlicManager.getManager().getKnownButtons()) {
+        for (FlicButton button : FlicManager.getManager().getKnownButtons())
+        {
             setupEventListenerForButtonInActivity(button);
         }
 
         progressBar.setProgress(0);
         progress.setText("$" + amount);
-        
 
     }
 
@@ -68,17 +72,17 @@ public class MainActivity extends AppCompatActivity {
             public void onButtonSingleOrDoubleClickOrHold(FlicButton button, boolean wasQueued, int timeDiff,
                                                           boolean isSingleClick, boolean isDoubleClick, boolean isHold){
                 if(isSingleClick){
-                    Toast.makeText(getApplicationContext(), "$2 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "$2 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
                     amount += 2;
 
                 } else if(isDoubleClick){
-                    Toast.makeText(getApplicationContext(), "$3 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "$3 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
                     amount += 3;
                 } else if (isHold){
-                    Toast.makeText(getApplicationContext(), "$5 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "$5 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
                     amount += 5;
                 } else {
-                    Toast.makeText(getApplicationContext(), "Something is broken", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Something is broken", Toast.LENGTH_SHORT).show();
                 }
 
                 progressBar.setProgress(amount);
