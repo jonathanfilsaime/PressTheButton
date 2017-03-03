@@ -58,20 +58,23 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/progress"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/single_click"
         android:id="@+id/single_click_button"
         android:background="@drawable/first_button"
-        android:layout_alignTop="@+id/progress"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/progress" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_alignTop="@+id/progress" />
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/progress"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
