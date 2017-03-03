@@ -1,13 +1,20 @@
 package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,8 +51,45 @@ public class MainActivity extends AppCompatActivity {
 
         progressBar.setProgress(0);
         progress.setText("$" + amount);
-        
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.chores, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int check = 0;
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                if(++check > 1) {
+                    Button button = (Button) findViewById(R.id.single_click_button);
+                    button.setText(parentView.getItemAtPosition(position).toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
+        spinner.setVisibility(View.INVISIBLE);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        final Button first_button = (Button) findViewById(R.id.single_click_button);
+
+        //TODO get form database
+        first_button.setText("Sweep");
+
+        first_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                spinner.performClick();
+            }
+        });
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
 
