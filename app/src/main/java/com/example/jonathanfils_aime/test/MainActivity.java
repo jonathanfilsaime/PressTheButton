@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static int amount = 0;
     public static ProgressBar progressBar;
-    public static TextView progress;
+    boolean isFirstTime = true;
 
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progress = (TextView) findViewById(R.id.progress) ;
 
         requestPermissions(new String[] {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
                 Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 4);
@@ -54,16 +53,14 @@ public class MainActivity extends AppCompatActivity {
             setupEventListenerForButtonInActivity(button);
         }
 
-        progressBar.setProgress(0);
-        progress.setText("$" + amount);
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
+        //SPINNERS////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        final Spinner first_spinner = (Spinner) findViewById(R.id.first_spinner);
+        ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(MainActivity.this,
                 R.array.chores, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        first_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        first_spinner.setAdapter(first_adapter);
+        first_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int check = 0;
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -80,10 +77,59 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        spinner.setVisibility(View.INVISIBLE);
+        final Spinner second_spinner = (Spinner) findViewById(R.id.second_spinner);
+        ArrayAdapter<CharSequence> second_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.chores, android.R.layout.simple_spinner_item);
+        second_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        second_spinner.setAdapter(second_adapter);
+        second_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                     int check = 0;
+
+                                                     @Override
+                                                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                                                         if (++check > 1) {
+                                                             Button button = (Button) findViewById(R.id.double_click_button);
+                                                             button.setText(parentView.getItemAtPosition(position).toString());
+                                                         }
+                                                     }
+
+                                                     @Override
+                                                     public void onNothingSelected(AdapterView<?> parentView) {
+
+                                                     }
+                                                 });
+
+        final Spinner third_spinner = (Spinner) findViewById(R.id.third_spinner);
+        ArrayAdapter<CharSequence> third_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.chores, android.R.layout.simple_spinner_item);
+        third_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        third_spinner.setAdapter(third_adapter);
+        third_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int check = 0;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                if (++check > 1) {
+                    Button button = (Button) findViewById(R.id.press_and_hold_button);
+                    button.setText(parentView.getItemAtPosition(position).toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
+
+
+        first_spinner.setVisibility(View.INVISIBLE);
+        second_spinner.setVisibility(View.INVISIBLE);
+        third_spinner.setVisibility(View.INVISIBLE);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //BUTTONS/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         final Button first_button = (Button) findViewById(R.id.single_click_button);
 
         //TODO get form database
@@ -91,7 +137,29 @@ public class MainActivity extends AppCompatActivity {
 
         first_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                spinner.performClick();
+                first_spinner.performClick();
+            }
+        });
+
+        final Button second_button = (Button) findViewById(R.id.double_click_button);
+
+        //TODO get form database
+        second_button.setText("Grades");
+
+        second_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                second_spinner.performClick();
+            }
+        });
+
+        final Button third_button = (Button) findViewById(R.id.press_and_hold_button);
+
+        //TODO get form database
+        third_button.setText("Trash");
+
+        third_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                third_spinner.performClick();
             }
         });
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,22 +184,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onButtonSingleOrDoubleClickOrHold(FlicButton button, boolean wasQueued, int timeDiff,
                                                           boolean isSingleClick, boolean isDoubleClick, boolean isHold){
+                if(isFirstTime) {
+                    isFirstTime = false;
+                    Toast.makeText(getApplicationContext(), "Button Connected", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if(isSingleClick){
-//                    Toast.makeText(getApplicationContext(), "$2 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
                     amount += 2;
 
                 } else if(isDoubleClick){
-//                    Toast.makeText(getApplicationContext(), "$3 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
                     amount += 3;
                 } else if (isHold){
-//                    Toast.makeText(getApplicationContext(), "$5 has been transfered towards your Goal", Toast.LENGTH_SHORT).show();
                     amount += 5;
-                } else {
-//                    Toast.makeText(getApplicationContext(), "Something is broken", Toast.LENGTH_SHORT).show();
                 }
 
                 progressBar.setProgress(amount);
-                progress.setText("$" + amount);
             }
 
         };
@@ -146,19 +213,17 @@ public class MainActivity extends AppCompatActivity {
         // Disable the button until the scan wizard has finished
         v.setEnabled(false);
         System.out.println("Scan new button method");
-        ((TextView)findViewById(R.id.scanWizardStatus)).setText("Press your Flic button");
         System.out.println("Starting scan wizard");
 
         FlicManager.getManager().getScanWizard().start(new FlicScanWizard.Callback() {
             @Override
             public void onDiscovered(FlicScanWizard wizard, String bdAddr, int rssi, boolean isPrivateMode, int revision) {
                 String text = isPrivateMode ? "Found private button. Hold down for 7 seconds." : "Found Flic, now connecting...";
-                ((TextView)findViewById(R.id.scanWizardStatus)).setText(text);
             }
 
             @Override
             public void onBLEConnected(FlicScanWizard wizard, String bdAddr) {
-                ((TextView)findViewById(R.id.scanWizardStatus)).setText("Connected. Now pairing...");
+
             }
 
             @Override
@@ -166,14 +231,12 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.scanNewButton).setEnabled(true);
                 ((PbfSampleApplication)getApplication()).listenToButtonWithToast(button);
 
-                ((TextView)findViewById(R.id.scanWizardStatus)).setText("Scan wizard success!");
                 setupEventListenerForButtonInActivity(button);
             }
 
             @Override
             public void onFailed(FlicScanWizard wizard, int flicScanWizardErrorCode) {
                 findViewById(R.id.scanNewButton).setEnabled(true);
-                ((TextView)findViewById(R.id.scanWizardStatus)).setText("Scan wizard failed with code " + flicScanWizardErrorCode);
             }
         });
     }
