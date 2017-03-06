@@ -11,14 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jonathanfils_aime.test.MainActivity">
 
-    <!--<TextView-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:background="@drawable/box"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_toEndOf="@+id/progress"-->
-        <!--android:layout_alignBottom="@+id/progress"-->
-        <!--android:layout_alignParentTop="true" />-->
 
     <ImageView
         android:layout_width="match_parent"
@@ -74,6 +66,38 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/first_spinner"
+        android:layout_above="@+id/second_spinner"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="34dp" />
+
+    <Spinner
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/second_spinner"
+        android:layout_below="@+id/press_and_hold_button"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/double_click_button"
+        android:background="@drawable/first_button"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/second_spinner"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/third_spinner"
+        android:layout_below="@+id/double_click_button"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true" />
         android:id="@+id/spinner"
         android:layout_marginTop="114dp"
         android:layout_below="@+id/goal"
@@ -91,16 +115,15 @@
         android:layout_above="@+id/spinner"/>
 
     <Button
+        android:text="Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/single_click"
-        android:id="@+id/single_click_button"
+        android:id="@+id/press_and_hold_button"
         android:background="@drawable/first_button"
-        android:layout_alignTop="@+id/spinner"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
-
+        android:layout_marginTop="45dp"
+        android:layout_below="@+id/progressBar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>
