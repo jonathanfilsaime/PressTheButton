@@ -11,26 +11,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jonathanfils_aime.test.MainActivity">
 
-
-    <ImageView
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="345dp"
         android:layout_height="200dp"
-        android:background="@drawable/rectangle"
+        android:background="@drawable/whiterec"
         android:padding="1dp"
-        style="@style/myImageView"
+        android:elevation="3dp"
         android:id="@+id/whiteBox"
 
-        />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="20000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scanNewButton"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="-300dp"
-        android:id="@+id/progress"
-        />
 
 
     <TextView
@@ -39,19 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/scanNewButton"
         android:layout_alignParentStart="true"
-        android:id="@+id/scanWizardStatus"/>
-
-
-
-    <TextView
-        android:text="$1000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scanNewButton"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="-300dp"
-        android:layout_marginLeft="280dp"
-        android:id="@+id/goal"/>
+        android:id="@+id/scanWizardStatus"
+        />
 
     <Button
         android:text="Scan new button"
@@ -63,22 +43,31 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/first_spinner"
-        android:layout_above="@+id/second_spinner"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="34dp" />
 
-    <Spinner
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/second_spinner"
-        android:layout_below="@+id/press_and_hold_button"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/custom_progress_bar"
+        android:indeterminate="false"
+        android:max="100"
+        android:elevation="3dp"
+        android:progress="20"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="34dp"
+        android:layout_alignBottom="@+id/whiteBox"
+        android:layout_alignStart="@+id/progress"
+        android:layout_alignEnd="@+id/goal" />
+
+    <Button
+        android:id="@+id/single_click_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp" />
+        android:layout_centerVertical="true"
+        android:background="@drawable/first_button"
+        android:text="@string/single_click" />
 
     <Button
         android:text="Button"
@@ -86,33 +75,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/double_click_button"
         android:background="@drawable/first_button"
-        android:layout_marginTop="10dp"
-        android:layout_alignTop="@+id/second_spinner"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/single_click_button"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/scanWizardStatus" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/third_spinner"
-        android:layout_below="@+id/double_click_button"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentEnd="true" />
-        android:id="@+id/spinner"
-        android:layout_marginTop="114dp"
-        android:layout_below="@+id/goal"
-        android:layout_toEndOf="@+id/progress" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="20"
-        android:layout_marginBottom="50dp"
-        android:layout_width="match_parent"
-        android:layout_above="@+id/spinner"/>
+        android:id="@+id/second_spinner"
+        android:layout_alignTop="@+id/double_click_button"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Button"
@@ -120,10 +93,44 @@
         android:layout_height="wrap_content"
         android:id="@+id/press_and_hold_button"
         android:background="@drawable/first_button"
-        android:layout_marginTop="45dp"
-        android:layout_below="@+id/progressBar"
+        android:layout_below="@+id/double_click_button"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="12dp"
         android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/third_spinner"
+        android:layout_alignTop="@+id/press_and_hold_button"
+        android:layout_toEndOf="@+id/scanWizardStatus" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/first_spinner"
+        android:layout_alignTop="@+id/single_click_button"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="20000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:layout_alignBottom="@+id/whiteBox"
+        android:layout_toEndOf="@+id/scanWizardStatus"
+        android:layout_marginStart="12dp"
+        android:elevation="3dp"/>
+
+    <TextView
+        android:text="$1000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/goal"
+        android:layout_alignBottom="@+id/whiteBox"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="14dp"
+        android:elevation="3dp"/>
 
 
 </RelativeLayout>
