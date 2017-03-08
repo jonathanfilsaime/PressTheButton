@@ -1,13 +1,9 @@
 package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +23,7 @@ import io.flic.poiclib.FlicButtonMode;
 import io.flic.poiclib.FlicManager;
 import io.flic.poiclib.FlicScanWizard;
 
-
-public class MainActivity extends AppCompatActivity {
+public class Profile_3 extends AppCompatActivity {
 
     public TextView dadProfile;
     public TextView momProfile;
@@ -60,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
         progress.setText("$" + amount);
 
         //drop down list
-        ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+        ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(Profile_3.this,
                 R.array.chores, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> second_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+        ArrayAdapter<CharSequence> second_adapter = ArrayAdapter.createFromResource(Profile_3.this,
                 R.array.chores, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> third_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+        ArrayAdapter<CharSequence> third_adapter = ArrayAdapter.createFromResource(Profile_3.this,
                 R.array.chores, android.R.layout.simple_spinner_item);
 
         //spinners
@@ -311,6 +305,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-
-
-

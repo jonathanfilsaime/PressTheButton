@@ -12,14 +12,44 @@
     tools:context="com.example.jonathanfils_aime.test.MainActivity">
 
     <TextView
+        android:id="@+id/profile1"
+        android:background="@drawable/dadpicture"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:onClick="startProfile1"/>
+
+    <TextView
+        android:id="@+id/profile2"
+        android:background="@drawable/mompicture"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="70dp"
+        android:onClick="startProfile2"/>
+
+    <TextView
+        android:id="@+id/profile3"
+        android:background="@drawable/child1picture"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="140dp"
+        android:onClick="startProfile3"/>
+
+    <TextView
+        android:id="@+id/profile4"
+        android:background="@drawable/childpicture"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="210dp"
+        android:onClick="startProfile4"/>
+
+    <TextView
+        android:layout_marginTop="70dp"
         android:layout_width="345dp"
-        android:layout_height="200dp"
+        android:layout_height="130dp"
         android:background="@drawable/whiterec"
         android:padding="1dp"
         android:elevation="3dp"
         android:id="@+id/whiteBox"
-
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 
