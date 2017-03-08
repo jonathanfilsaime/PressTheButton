@@ -257,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
                 if(isSingleClick)
                 {
                     amount += 2;
-
                 }
                 else if(isDoubleClick)
                 {

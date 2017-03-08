@@ -253,7 +253,6 @@ public class Profile_2 extends AppCompatActivity
                 if(isSingleClick)
                 {
                     amount += 2;
-
                 }
                 else if(isDoubleClick)
                 {
