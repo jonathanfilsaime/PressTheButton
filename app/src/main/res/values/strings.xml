@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PbfSample</string>
+    <string name="app_name">Family Savings</string>
     <string name="single_click">Sweep</string>
     <string-array name="chores">
         <item>Sweeping</item>
