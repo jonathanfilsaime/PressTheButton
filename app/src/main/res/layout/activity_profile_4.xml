@@ -19,6 +19,15 @@
         android:onClick="startProfile1"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Jennifer"
+        android:elevation="5dp"
+        android:layout_above="@+id/progressBar"
+        android:layout_alignStart="@+id/progressBar"
+        android:layout_alignEnd="@+id/profile2" />
+
+    <TextView
         android:id="@+id/profile2"
         android:background="@drawable/mompicture"
         android:layout_height="60dp"
@@ -40,6 +49,8 @@
         android:layout_height="60dp"
         android:layout_width="60dp"
         android:layout_marginLeft="210dp"
+        android:elevation="5dp"
+        android:shadowColor="@color/colorPrimary"
         android:onClick="startProfile4"/>
 
     <TextView
