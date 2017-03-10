@@ -1,10 +1,13 @@
 package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.TransitionDrawable;
+import android.support.transition.Transition;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_2);
+        setContentView(R.layout.activity_main);
 
         //Activity elements
         dadProfile = (TextView) findViewById(R.id.profile1);
@@ -209,23 +212,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void startProfile2(View v)
     {
-        this.finish();
         Intent intent = new Intent(this, Profile_2.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     public void startProfile3(View v)
     {
-        this.finish();
         Intent intent = new Intent(this, Profile_3.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     public void startProfile4(View v)
     {
-        this.finish();
         Intent intent = new Intent(this, Profile_4.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     @Override

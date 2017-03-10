@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:theme="@style/noAnimTheme">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,9 +52,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Profile_2" android:theme="@style/noAnimTheme" />
-        <activity android:name=".Profile_3" android:theme="@style/noAnimTheme" />
-        <activity android:name=".Profile_4" android:theme="@style/noAnimTheme"></activity>
+        <activity android:name=".Profile_2" />
+        <activity android:name=".Profile_3" />
+        <activity android:name=".Profile_4" ></activity>
     </application>
 
 </manifest>

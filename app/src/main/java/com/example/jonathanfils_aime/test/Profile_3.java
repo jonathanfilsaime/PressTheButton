@@ -41,7 +41,9 @@ public class Profile_3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_2);
+        setContentView(R.layout.activity_profile_3);
+
+        System.out.println("\n\n\ncreated christopher profile\n\n\n");
 
         //Activity elements
         dadProfile = (TextView) findViewById(R.id.profile1);
@@ -197,29 +199,35 @@ public class Profile_3 extends AppCompatActivity {
     //loading profile activity
     public void startProfile1(View v)
     {
-        this.finish();
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     public void startProfile2(View v)
     {
-        this.finish();
         Intent intent = new Intent(this, Profile_2.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     public void startProfile3(View v)
     {
 //        Intent intent = new Intent(this, Profile_3.class);
 //        startActivity(intent);
+//        overridePendingTransition(0,0);
+//        this.finish();
     }
 
     public void startProfile4(View v)
     {
-        this.finish();
         Intent intent = new Intent(this, Profile_4.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     @Override

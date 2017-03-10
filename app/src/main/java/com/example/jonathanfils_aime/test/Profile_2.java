@@ -199,29 +199,35 @@ public class Profile_2 extends AppCompatActivity
     //loading profile activity
     public void startProfile1(View v)
     {
-        this.finish();
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     public void startProfile2(View v)
     {
 //        Intent intent = new Intent(this, Profile_2.class);
 //        startActivity(intent);
+//        overridePendingTransition(0,0);
+//        this.finish();
     }
 
     public void startProfile3(View v)
     {
-        this.finish();
         Intent intent = new Intent(this, Profile_3.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     public void startProfile4(View v)
     {
-        this.finish();
         Intent intent = new Intent(this, Profile_4.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
+        this.finish();
     }
 
     @Override
