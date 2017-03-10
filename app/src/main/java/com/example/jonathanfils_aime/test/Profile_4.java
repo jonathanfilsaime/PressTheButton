@@ -66,7 +66,7 @@ public class Profile_4 extends AppCompatActivity {
         db = databaseHelper.getWritableDatabase();
 
 //        check if entry already exist
-        Cursor cursor = db.rawQuery("SELECT first_name FROM records WHERE profile = '4'", null);
+        Cursor cursor = db.rawQuery("S ELECT first_name FROM records WHERE profile = '4'", null);
         while (cursor.moveToNext())
         {
             checkName = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME));
