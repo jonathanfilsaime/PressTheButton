@@ -15,12 +15,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME + " VARCHAR(50)," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME + " VARCHAR(50)," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER + " INTEGER," +
-            FeedReaderContract.FeedEntry.COLUMN_NAME_SAVINGS_ACCOUNT + " INTEGER," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL + " INTEGER," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT + " INTEGER," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK + " INTEGER," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK + " INTEGER," +
-            FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS + " INTEGER)";
+            FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS + " INTEGER," +
+            FeedReaderContract.FeedEntry.COLUMN_NAME_PROFILE + " INTEGER)";
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXIST " + FeedReaderContract.FeedEntry.TABLE_NAME;
 

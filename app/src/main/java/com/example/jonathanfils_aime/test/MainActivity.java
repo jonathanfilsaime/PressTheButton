@@ -2,8 +2,11 @@ package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
 import android.app.ActivityOptions;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.FeatureGroupInfo;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.TransitionDrawable;
@@ -40,12 +43,28 @@ public class MainActivity extends AppCompatActivity {
     public TextView child2Profile;
     public TextView progress;
     public TextView goal;
-    public int amount = 0;
+    public TextView profileName;
     public ProgressBar progressBar;
     boolean isFirstTime = true;
-//    public static SQLiteDatabase db = DatabaseHelper.getWritableDatabase();
+
+    
+    
+    public String checkName;
+    public String the_first_name;
+    public String the_last_name;
+    public int the_phone_number;
+    public int the_amount = 0;
+    public int the_goal = 0;
+    public int singleClickCounter;
+    public int doubleClickCounter;
+    public int longClickCounter;
+    
 
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
+
+    //database
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,13 +72,52 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //database
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        //need to check if database exist
-        //if it does just update
-        //if it doesn't then create
+        databaseHelper = new DatabaseHelper(this);
+        db = databaseHelper.getWritableDatabase();
 
+//        check if entry already exist
+        Cursor cursor = db.rawQuery("SELECT first_name FROM records WHERE profile = '1'", null);
+        while (cursor.moveToNext())
+        {
+            checkName = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME));
+        }
+
+        if(checkName.equals("Darren"))
+        {
+
+        }
+        else
+        {
+            ContentValues values = new ContentValues();
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PROFILE, 1);
+            db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
+        }
+
+
+        //if exist now read an set the elements 
+        cursor = db.rawQuery("SELECT * FROM records WHERE profile = 1", null);
+        while(cursor.moveToNext())
+        {
+            the_first_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME));
+            the_last_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME));
+            the_phone_number = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER));
+            the_amount = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT));
+            the_goal = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL));
+            singleClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK));
+            doubleClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK));
+            longClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS));
+        }
+        
+
+        cursor.close();
         //Activity elements
         dadProfile = (TextView) findViewById(R.id.profile1);
         momProfile = (TextView) findViewById(R.id.profile2);
@@ -67,8 +125,12 @@ public class MainActivity extends AppCompatActivity {
         child2Profile = (TextView) findViewById(R.id.profile4);
         progress = (TextView) findViewById(R.id.progress);
         goal = (TextView) findViewById(R.id.goal);
-        goal.setText("$" + 100);
-        progress.setText("$" + amount);
+        profileName = (TextView) findViewById(R.id.profile1name);
+
+        //set using database values
+        profileName.setText(the_first_name);
+        goal.setText("$" + the_goal);
+        progress.setText("$" + the_amount);
 
         //drop down list
         ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(MainActivity.this,
@@ -93,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         //progress bar
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setProgress(0);
+        progressBar.setProgress(the_amount);
 
         //button to activate drop down
         final Button first_button = (Button) findViewById(R.id.single_click_button);
@@ -273,19 +335,33 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(isSingleClick)
                 {
-                    amount += 2;
+                    the_amount += 2;
+                    singleClickCounter++;
                 }
                 else if(isDoubleClick)
                 {
-                    amount += 3;
+                    the_amount += 3;
+                    doubleClickCounter++;
                 }
                 else if (isHold)
                 {
-                    amount += 5;
+                    the_amount += 5;
+                    longClickCounter++;
                 }
 
-                progress.setText("$" + amount);
-                progressBar.setProgress(amount);
+                progress.setText("$" + the_amount);
+                progressBar.setProgress(the_amount);
+
+                ContentValues valuesUpdated = new ContentValues();
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
             }
 
         };

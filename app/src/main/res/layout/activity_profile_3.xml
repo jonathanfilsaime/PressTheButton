@@ -23,6 +23,7 @@
         android:layout_height="60dp"
         android:text="Christopher"
         android:elevation="5dp"
+        android:id="@+id/profile3name"
         android:layout_above="@+id/progressBar"
         android:layout_alignStart="@+id/progressBar"
         android:layout_toStartOf="@+id/scanNewButton" />
