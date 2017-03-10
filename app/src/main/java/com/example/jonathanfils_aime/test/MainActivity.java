@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getWritableDatabase();
 
-//        check if entry already exist
+        //check if entry already exist
         Cursor cursor = db.rawQuery("SELECT first_name FROM records WHERE profile = '1'", null);
         while (cursor.moveToNext())
         {

@@ -20,7 +20,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK + " INTEGER," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK + " INTEGER," +
             FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS + " INTEGER," +
-            FeedReaderContract.FeedEntry.COLUMN_NAME_PROFILE + " INTEGER)";
+            FeedReaderContract.FeedEntry.COLUMN_NAME_PROFILE + " INTEGER," +
+            FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE + " VARCHAR(50),"+
+            FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE + " VARCHAR(50),"+
+            FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE + " VARCHAR(50))";
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXIST " + FeedReaderContract.FeedEntry.TABLE_NAME;
 

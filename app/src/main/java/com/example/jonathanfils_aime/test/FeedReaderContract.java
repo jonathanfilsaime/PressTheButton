@@ -24,6 +24,9 @@ public class FeedReaderContract {
         public static final String COLUMN_NAME_DOUBLE_CLICK = "Double_Click";
         public static final String COLUMN_NAME_LONG_PRESS = "Long_Press";
         public static final String COLUMN_NAME_PROFILE = "profile";
+        public static final String COLUMN_NAME_SINGLE_CLICK_CHOICE = "single_click_choice";
+        public static final String COLUMN_NAME_DOUBLE_CLICK_CHOICE = "single_click_choice";
+        public static final String COLUMN_NAME_LONG_PRESS_CLICK_CHOICE = "single_click_choice";
 
     }
 }
