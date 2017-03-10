@@ -2,6 +2,7 @@ package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,7 +44,12 @@ public class Profile_3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_3);
 
-        System.out.println("\n\n\ncreated christopher profile\n\n\n");
+        //database
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        //need to check if database exist
+        //if it does just update
+        //if it doesn't then create
 
         //Activity elements
         dadProfile = (TextView) findViewById(R.id.profile1);

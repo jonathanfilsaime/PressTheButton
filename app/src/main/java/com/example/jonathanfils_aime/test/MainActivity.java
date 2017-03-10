@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public int amount = 0;
     public ProgressBar progressBar;
     boolean isFirstTime = true;
+//    public static SQLiteDatabase db = DatabaseHelper.getWritableDatabase();
 
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
@@ -51,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //database
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        //need to check if database exist
+        //if it does just update
+        //if it doesn't then create
 
         //Activity elements
         dadProfile = (TextView) findViewById(R.id.profile1);
