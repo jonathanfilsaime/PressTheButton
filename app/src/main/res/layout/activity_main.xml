@@ -22,6 +22,15 @@
         android:onClick="startProfile1"/>
 
     <TextView
+        android:id="@+id/shadow1"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:elevation="3dp"
+        android:shadowRadius="5"
+        android:padding="5dp"
+        android:background="@drawable/shadow" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="Darren"

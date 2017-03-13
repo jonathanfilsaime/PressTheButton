@@ -39,6 +39,16 @@
         android:onClick="startProfile2"/>
 
     <TextView
+        android:id="@+id/shadow1"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="70dp"
+        android:elevation="3dp"
+        android:shadowRadius="5"
+        android:padding="5dp"
+        android:background="@drawable/shadow" />
+
+    <TextView
         android:id="@+id/profile3"
         android:background="@drawable/child1picture"
         android:layout_height="60dp"

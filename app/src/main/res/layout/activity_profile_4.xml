@@ -55,6 +55,16 @@
         android:onClick="startProfile4"/>
 
     <TextView
+        android:id="@+id/shadow1"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="210dp"
+        android:elevation="3dp"
+        android:shadowRadius="5"
+        android:padding="5dp"
+        android:background="@drawable/shadow" />
+
+    <TextView
         android:layout_marginTop="70dp"
         android:layout_width="345dp"
         android:layout_height="130dp"
