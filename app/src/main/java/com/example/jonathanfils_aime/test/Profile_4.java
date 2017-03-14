@@ -32,6 +32,7 @@ public class Profile_4 extends AppCompatActivity {
     public TextView child2Profile;
     public TextView progress;
     public TextView goal;
+    public boolean isButtonConnected = false;
     public int amount = 0;
     public ProgressBar progressBar;
     boolean isFirstTime = true;
@@ -200,6 +201,17 @@ public class Profile_4 extends AppCompatActivity {
                 third_spinner.performClick();
             }
         });
+
+         if( getIntent().getExtras().getBoolean("isButtonConnected") ) {
+            isButtonConnected = true;
+         } else {
+             isButtonConnected = false;
+         }
+
+        if(isButtonConnected) {
+            Button scan_button = (Button) findViewById(R.id.scanNewButton);
+            scan_button.setVisibility(View.GONE);
+        }
     }
 
     //loading profile activity
@@ -207,6 +219,7 @@ public class Profile_4 extends AppCompatActivity {
     {
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -215,6 +228,7 @@ public class Profile_4 extends AppCompatActivity {
     public void startProfile2(View v)
     {
         Intent intent = new Intent(this, Profile_2.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -223,6 +237,7 @@ public class Profile_4 extends AppCompatActivity {
     public void startProfile3(View v)
     {
         Intent intent = new Intent(this, Profile_3.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -263,6 +278,7 @@ public class Profile_4 extends AppCompatActivity {
                     Button scan_button = (Button) findViewById(R.id.scanNewButton);
                     scan_button.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Button Connected", Toast.LENGTH_LONG).show();
+                    isButtonConnected = true;
                     return;
                 }
                 if(isSingleClick)

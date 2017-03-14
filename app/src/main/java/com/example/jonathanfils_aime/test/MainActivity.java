@@ -10,6 +10,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.support.transition.Transition;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,18 +35,26 @@ import io.flic.poiclib.FlicScanWizard;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean isUserInteracting = false;
     public TextView dadProfile;
     public TextView momProfile;
     public TextView child1Profile;
     public TextView child2Profile;
     public TextView progress;
     public TextView goal;
+    public boolean isButtonConnected = false;
     public int amount = 0;
     public ProgressBar progressBar;
     boolean isFirstTime = true;
 //    public static SQLiteDatabase db = DatabaseHelper.getWritableDatabase();
 
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        isUserInteracting = true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -115,76 +124,73 @@ public class MainActivity extends AppCompatActivity {
             setupEventListenerForButtonInActivity(button);
         }
 
-
         first_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            int check = 0;
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
-
-                if(++check > 1)
-                {
+                if(isUserInteracting) {
+                    String text = parentView.getItemAtPosition(position).toString();
                     Button button = (Button) findViewById(R.id.single_click_button);
-                    button.setText(parentView.getItemAtPosition(position).toString());
+                    button.setText(text);
+
+                    int reference = getApplicationContext().getResources().getIdentifier(text,
+                            "drawable", getApplicationContext().getPackageName());
+
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, 0, 0);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView)
             {
-
             }
-
         });
 
 
         second_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            int check = 0;
-
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String text = parentView.getItemAtPosition(position).toString();
+                Button button = (Button) findViewById(R.id.double_click_button);
+                button.setText(text);
 
-                if (++check > 1) {
-                    Button button = (Button) findViewById(R.id.double_click_button);
-                    button.setText(parentView.getItemAtPosition(position).toString());
-                }
+                int reference = getApplicationContext().getResources().getIdentifier(text,
+                        "drawable", getApplicationContext().getPackageName());
+
+                button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, 0, 0);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView)
             {
-
             }
         });
 
-
         third_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            int check = 0;
-
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String text = parentView.getItemAtPosition(position).toString();
+                Button button = (Button) findViewById(R.id.press_and_hold_button);
+                button.setText(text);
 
-                if (++check > 1) {
-                    Button button = (Button) findViewById(R.id.press_and_hold_button);
-                    button.setText(parentView.getItemAtPosition(position).toString());
-                }
+                int reference = getApplicationContext().getResources().getIdentifier(text,
+                        "drawable", getApplicationContext().getPackageName());
+
+                button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, 0, 0);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView)
             {
-
             }
         });
 
         first_spinner.setVisibility(View.INVISIBLE);
         second_spinner.setVisibility(View.INVISIBLE);
         third_spinner.setVisibility(View.INVISIBLE);
-
-
 
         first_button.setOnClickListener(new View.OnClickListener()
         {
@@ -209,18 +215,29 @@ public class MainActivity extends AppCompatActivity {
                 third_spinner.performClick();
             }
         });
+
+        if( getIntent().getExtras() != null && getIntent().getExtras().getBoolean("isButtonConnected") ) {
+            isButtonConnected = true;
+        } else {
+            isButtonConnected = false;
+        }
+
+        if(isButtonConnected) {
+            Button scan_button = (Button) findViewById(R.id.scanNewButton);
+            scan_button.setVisibility(View.GONE);
+        }
     }
 
     //loading profile activity
     public void startProfile1(View v)
     {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
+
     }
 
     public void startProfile2(View v)
     {
         Intent intent = new Intent(this, Profile_2.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -229,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
     public void startProfile3(View v)
     {
         Intent intent = new Intent(this, Profile_3.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -237,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
     public void startProfile4(View v)
     {
         Intent intent = new Intent(this, Profile_4.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -263,12 +282,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onButtonSingleOrDoubleClickOrHold(FlicButton button, boolean wasQueued, int timeDiff,
                                                           boolean isSingleClick, boolean isDoubleClick, boolean isHold){
+                System.out.println("First button clicked " + button.getName());
                 if(isFirstTime)
                 {
                     isFirstTime = false;
                     Button scan_button = (Button) findViewById(R.id.scanNewButton);
                     scan_button.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), "Button Connected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "First Button Connected", Toast.LENGTH_LONG).show();
+                    isButtonConnected = true;
                     return;
                 }
                 if(isSingleClick)
@@ -298,13 +319,10 @@ public class MainActivity extends AppCompatActivity {
     public void scanNewButton(View v) {
         // Disable the button until the scan wizard has finished
         v.setEnabled(false);
-        System.out.println("Scan new button method");
-        System.out.println("Starting scan wizard");
 
         FlicManager.getManager().getScanWizard().start(new FlicScanWizard.Callback() {
             @Override
             public void onDiscovered(FlicScanWizard wizard, String bdAddr, int rssi, boolean isPrivateMode, int revision) {
-                String text = isPrivateMode ? "Found private button. Hold down for 7 seconds." : "Found Flic, now connecting...";
             }
 
             @Override

@@ -2,8 +2,9 @@
     <string name="app_name">Family Savings</string>
     <string name="single_click">Sweep</string>
     <string-array name="chores">
-        <item>Sweeping</item>
-        <item>Trash</item>
-        <item>Grades</item>
+        <item>sweep</item>
+        <item>trash</item>
+        <item>grades</item>
+        <item>dishes</item>
     </string-array>
 </resources>

@@ -73,17 +73,6 @@
         android:id="@+id/scanWizardStatus"
         />
 
-    <Button
-        android:text="Scan new button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scanNewButton"
-        android:onClick="scanNewButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp" />
-
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_height="wrap_content"
@@ -108,6 +97,31 @@
         android:layout_centerVertical="true"
         android:background="@drawable/first_button"
         android:text="@string/single_click" />
+
+    <!--<RelativeLayout-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--style="@android:style/Widget.Button"-->
+        <!--android:background="@drawable/first_button">-->
+        <!--<ImageView-->
+            <!--android:id="@+id/imageview_find_days_in_between"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/sweep" />-->
+        <!--<TextView android:text="Sweeeeeep"-->
+            <!--android:id="@+id/firstTextView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="#000"></TextView>-->
+        <!--<TextView android:textColor="#000"-->
+            <!--android:text="$$$"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/secondTextView"-->
+            <!--android:layout_width="wrap_content"></TextView>-->
+    <!--</RelativeLayout>-->
 
     <Button
         android:text="Button"
@@ -142,8 +156,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/third_spinner"
-        android:layout_alignTop="@+id/press_and_hold_button"
-        android:layout_toEndOf="@+id/scanWizardStatus" />
+        android:layout_alignBottom="@+id/press_and_hold_button"
+        android:layout_alignEnd="@+id/whiteBox" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -172,5 +186,14 @@
         android:layout_marginEnd="14dp"
         android:elevation="3dp"/>
 
+    <Button
+        android:text="Scan new button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scanNewButton"
+        android:onClick="scanNewButton"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/press_and_hold_button"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

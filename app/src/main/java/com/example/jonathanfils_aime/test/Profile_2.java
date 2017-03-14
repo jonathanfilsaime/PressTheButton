@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,7 @@ public class Profile_2 extends AppCompatActivity
     public TextView child2Profile;
     public TextView progress;
     public TextView goal;
+    public boolean isButtonConnected = false;
     public int amount = 0;
     public ProgressBar progressBar;
     boolean isFirstTime = true;
@@ -91,6 +93,7 @@ public class Profile_2 extends AppCompatActivity
         //button to activate drop down
         final Button first_button = (Button) findViewById(R.id.single_click_button);
         first_button.setText("Single CLick");
+        first_button.setText(Html.fromHtml("Single Click" + "<span style='text-align: right'>$$$$$</span>"));
 
         final Button second_button = (Button) findViewById(R.id.double_click_button);
         second_button.setText("Double Click");
@@ -202,6 +205,17 @@ public class Profile_2 extends AppCompatActivity
                 third_spinner.performClick();
             }
         });
+
+        if( getIntent().getExtras().getBoolean("isButtonConnected") ) {
+            isButtonConnected = true;
+        } else {
+            isButtonConnected = false;
+        }
+
+        if(isButtonConnected) {
+            Button scan_button = (Button) findViewById(R.id.scanNewButton);
+            scan_button.setVisibility(View.GONE);
+        }
     }
 
     //loading profile activity
@@ -209,6 +223,7 @@ public class Profile_2 extends AppCompatActivity
     {
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -225,6 +240,7 @@ public class Profile_2 extends AppCompatActivity
     public void startProfile3(View v)
     {
         Intent intent = new Intent(this, Profile_3.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -233,6 +249,7 @@ public class Profile_2 extends AppCompatActivity
     public void startProfile4(View v)
     {
         Intent intent = new Intent(this, Profile_4.class);
+        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -265,6 +282,7 @@ public class Profile_2 extends AppCompatActivity
                     Button scan_button = (Button) findViewById(R.id.scanNewButton);
                     scan_button.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Button Connected", Toast.LENGTH_LONG).show();
+                    isButtonConnected = true;
                     return;
                 }
                 if(isSingleClick)
