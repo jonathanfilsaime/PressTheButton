@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="Jennifer"
+        android:id="@+id/profile4name"
         android:elevation="5dp"
         android:layout_above="@+id/progressBar"
         android:layout_alignStart="@+id/progressBar"
@@ -52,6 +53,16 @@
         android:elevation="5dp"
         android:shadowColor="@color/colorPrimary"
         android:onClick="startProfile4"/>
+
+    <TextView
+        android:id="@+id/shadow1"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="210dp"
+        android:elevation="3dp"
+        android:shadowRadius="5"
+        android:padding="5dp"
+        android:background="@drawable/shadow" />
 
     <TextView
         android:layout_marginTop="70dp"

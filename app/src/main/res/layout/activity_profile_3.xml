@@ -23,6 +23,7 @@
         android:layout_height="60dp"
         android:text="Christopher"
         android:elevation="5dp"
+        android:id="@+id/profile3name"
         android:layout_above="@+id/progressBar"
         android:layout_alignStart="@+id/progressBar"
         android:layout_toStartOf="@+id/scanNewButton" />
@@ -44,6 +45,16 @@
         android:elevation="5dp"
         android:shadowColor="@color/colorPrimary"
         android:onClick="startProfile3"/>
+
+    <TextView
+        android:id="@+id/shadow1"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="140dp"
+        android:elevation="3dp"
+        android:shadowRadius="5"
+        android:padding="5dp"
+        android:background="@drawable/shadow" />
 
     <TextView
         android:id="@+id/profile4"
