@@ -46,6 +46,11 @@ public class Profile_2 extends AppCompatActivity
     public String checkName;
     public String the_first_name;
     public String the_last_name;
+    /////
+    public String single_click_name = "Single Click";
+    public String double_click_name = "Double Click";
+    public String long_press_name = "Long Press";
+    ////
     public int the_phone_number;
     public int the_amount = 0;
     public int the_goal = 0;
@@ -68,6 +73,7 @@ public class Profile_2 extends AppCompatActivity
 
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getWritableDatabase();
+        String testName = "Gina";
 
 //        check if entry already exist
         Cursor cursor = db.rawQuery("SELECT first_name FROM records WHERE profile = '2'", null);
@@ -76,7 +82,7 @@ public class Profile_2 extends AppCompatActivity
             checkName = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME));
         }
 
-        if(checkName.equals("Gina"))
+        if(testName.equals(checkName))
         {
 
         }
@@ -92,6 +98,11 @@ public class Profile_2 extends AppCompatActivity
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PROFILE, 2);
+            /////
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE, single_click_name);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE, double_click_name);
+            values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE, long_press_name);
+            /////
             db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
         }
 
@@ -108,6 +119,12 @@ public class Profile_2 extends AppCompatActivity
             singleClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK));
             doubleClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK));
             longClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS));
+
+            /////
+            single_click_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE));
+            double_click_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE));
+            long_press_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE));
+            ////
 
             System.out.println("first name " + the_first_name);
             System.out.println("last name " + the_last_name);
@@ -165,6 +182,12 @@ public class Profile_2 extends AppCompatActivity
         final Button third_button = (Button) findViewById(R.id.press_and_hold_button);
         third_button.setText("Long Hold");
 
+        //////
+        first_button.setText(single_click_name);
+        second_button.setText(double_click_name);
+        third_button.setText(long_press_name);
+        //////
+
         //bluetooth permission for the button
         requestPermissions(new String[] {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
                 Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 4);
@@ -187,7 +210,24 @@ public class Profile_2 extends AppCompatActivity
                 {
                     Button button = (Button) findViewById(R.id.single_click_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
+                    single_click_name = parentView.getItemAtPosition(position).toString();
+
                 }
+
+                //////////
+                ContentValues valuesUpdated = new ContentValues();
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE, single_click_name);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                ////////
             }
 
             @Override
@@ -209,7 +249,23 @@ public class Profile_2 extends AppCompatActivity
                 if (++check > 1) {
                     Button button = (Button) findViewById(R.id.double_click_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
+                    double_click_name = parentView.getItemAtPosition(position).toString();
                 }
+
+                //////
+                ContentValues valuesUpdated = new ContentValues();
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE, double_click_name);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                /////
             }
 
             @Override
@@ -230,7 +286,22 @@ public class Profile_2 extends AppCompatActivity
                 if (++check > 1) {
                     Button button = (Button) findViewById(R.id.press_and_hold_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
+                    long_press_name = parentView.getItemAtPosition(position).toString();
                 }
+                ///////
+                ContentValues valuesUpdated = new ContentValues();
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE, long_press_name);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                //////
             }
 
             @Override
