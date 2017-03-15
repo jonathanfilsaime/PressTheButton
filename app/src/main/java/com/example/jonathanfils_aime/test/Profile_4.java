@@ -219,7 +219,7 @@ public class Profile_4 extends AppCompatActivity {
 //                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
 //                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
                 valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE, single_click_name);
-                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '4'", null);
                 ////////
             }
 
@@ -256,7 +256,7 @@ public class Profile_4 extends AppCompatActivity {
 //                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
 //                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
                 valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE, double_click_name);
-                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '4'", null);
                 /////
             }
 
@@ -292,7 +292,7 @@ public class Profile_4 extends AppCompatActivity {
 //                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
 //                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
                 valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE, long_press_name);
-                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '4'", null);
                 //////
             }
 
