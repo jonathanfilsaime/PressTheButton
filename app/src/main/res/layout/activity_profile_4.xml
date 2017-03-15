@@ -59,7 +59,7 @@
         android:layout_height="60dp"
         android:layout_width="60dp"
         android:layout_marginLeft="210dp"
-        android:elevation="3dp"
+        android:elevation="4dp"
         android:shadowRadius="5"
         android:padding="5dp"
         android:background="@drawable/shadow" />

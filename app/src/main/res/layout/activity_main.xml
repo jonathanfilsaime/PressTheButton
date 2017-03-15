@@ -25,10 +25,19 @@
         android:id="@+id/shadow1"
         android:layout_height="60dp"
         android:layout_width="60dp"
-        android:elevation="3dp"
-        android:shadowRadius="5"
+        android:elevation="4dp"
         android:padding="5dp"
         android:background="@drawable/shadow" />
+
+    <TextView
+        android:id="@+id/Blackshadow1"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:elevation="1dp"
+        android:padding="5dp"
+        android:background="@drawable/blackshadow" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,24 +54,60 @@
         android:background="@drawable/mompicture"
         android:layout_height="60dp"
         android:layout_width="60dp"
+        android:elevation ="5dp"
         android:layout_marginLeft="70dp"
         android:onClick="startProfile2"/>
+
+    <TextView
+        android:id="@+id/Blackshadow2"
+        android:layout_marginTop="2dp"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="72dp"
+        android:elevation="1dp"
+        android:padding="5dp"
+        android:background="@drawable/blackshadow" />
+
 
     <TextView
         android:id="@+id/profile3"
         android:background="@drawable/child1picture"
         android:layout_height="60dp"
         android:layout_width="60dp"
+        android:elevation ="5dp"
         android:layout_marginLeft="140dp"
         android:onClick="startProfile3"/>
+
+    <TextView
+        android:id="@+id/Blackshadow3"
+        android:layout_marginTop="2dp"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="142dp"
+        android:elevation="1dp"
+        android:padding="5dp"
+        android:background="@drawable/blackshadow" />
 
     <TextView
         android:id="@+id/profile4"
         android:background="@drawable/childpicture"
         android:layout_height="60dp"
         android:layout_width="60dp"
+        android:elevation ="5dp"
         android:layout_marginLeft="210dp"
         android:onClick="startProfile4"/>
+
+    <TextView
+        android:id="@+id/Blackshadow4"
+        android:layout_marginTop="2dp"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:layout_marginLeft="212dp"
+        android:elevation="1dp"
+        android:padding="5dp"
+        android:background="@drawable/blackshadow" />
+
+
 
     <TextView
         android:layout_marginTop="70dp"
