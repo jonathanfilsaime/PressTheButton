@@ -2,9 +2,21 @@
     <string name="app_name">Family Savings</string>
     <string name="single_click">Sweep</string>
     <string-array name="chores">
-        <item>sweep</item>
-        <item>trash</item>
-        <item>grades</item>
-        <item>dishes</item>
+        <item>sweep kitchen</item>
+        <item>take out trash</item>
+        <item>get an a</item>
+        <item>do dishes</item>
+        <item>vacuum living room</item>
+        <item>clean windows</item>
+        <item>feed the pets</item>
+        <item>walk the dog</item>
+    </string-array>
+    <string-array name="adults">
+        <item>skip coffee</item>
+        <item>bring lunch</item>
+        <item>rent a movie</item>
+        <item>use a coupon</item>
+        <item>ride your bike</item>
+        <item>take the bus</item>
     </string-array>
 </resources>

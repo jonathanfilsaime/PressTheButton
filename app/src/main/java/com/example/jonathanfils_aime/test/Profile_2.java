@@ -46,11 +46,7 @@ public class Profile_2 extends AppCompatActivity
     public String checkName;
     public String the_first_name;
     public String the_last_name;
-    /////
-    public String single_click_name = "Single Click";
-    public String double_click_name = "Double Click";
-    public String long_press_name = "Long Press";
-    ////
+
     public int the_phone_number;
     public int the_amount = 0;
     public int the_goal = 0;
@@ -58,6 +54,12 @@ public class Profile_2 extends AppCompatActivity
     public int doubleClickCounter;
     public int longClickCounter;
 
+    public String single_click_name = "Single Click";
+    public String double_click_name = "Double Click";
+    public String long_press_name = "Long Press";
+
+    public String PARENTS_BUTTON = "F022cgOY";
+    public String CHILDRENS_BUTTON = "F018cgRB";
 
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
@@ -149,11 +151,11 @@ public class Profile_2 extends AppCompatActivity
 
         //drop down list
         ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(Profile_2.this,
-                R.array.chores, android.R.layout.simple_spinner_item);
+                R.array.adults, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> second_adapter = ArrayAdapter.createFromResource(Profile_2.this,
-                R.array.chores, android.R.layout.simple_spinner_item);
+                R.array.adults, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> third_adapter = ArrayAdapter.createFromResource(Profile_2.this,
-                R.array.chores, android.R.layout.simple_spinner_item);
+                R.array.adults, android.R.layout.simple_spinner_item);
 
         //spinners
         final Spinner first_spinner = (Spinner) findViewById(R.id.first_spinner);
@@ -186,6 +188,16 @@ public class Profile_2 extends AppCompatActivity
         first_button.setText(single_click_name);
         second_button.setText(double_click_name);
         third_button.setText(long_press_name);
+
+        int reference = getApplicationContext().getResources().getIdentifier(single_click_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        first_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_two_dollars, 0);
+        reference = getApplicationContext().getResources().getIdentifier(double_click_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        second_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_three_dollars, 0);
+        reference = getApplicationContext().getResources().getIdentifier(long_press_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        third_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_five_dollars, 0);
         //////
 
         //bluetooth permission for the button
@@ -208,9 +220,17 @@ public class Profile_2 extends AppCompatActivity
 
                 if(++check > 1)
                 {
+                    String text = parentView.getItemAtPosition(position).toString();
+                    text = text.replaceAll(" ", "_");
+
                     Button button = (Button) findViewById(R.id.single_click_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
                     single_click_name = parentView.getItemAtPosition(position).toString();
+
+                    int reference = getApplicationContext().getResources().getIdentifier(text,
+                            "drawable", getApplicationContext().getPackageName());
+
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_three_dollars, 0);
 
                 }
 
@@ -247,9 +267,17 @@ public class Profile_2 extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
                 if (++check > 1) {
+                    String text = parentView.getItemAtPosition(position).toString();
+                    text = text.replaceAll(" ", "_");
+
                     Button button = (Button) findViewById(R.id.double_click_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
                     double_click_name = parentView.getItemAtPosition(position).toString();
+
+                    int reference = getApplicationContext().getResources().getIdentifier(text,
+                            "drawable", getApplicationContext().getPackageName());
+
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_five_dollars, 0);
                 }
 
                 //////
@@ -284,9 +312,17 @@ public class Profile_2 extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
                 if (++check > 1) {
+                    String text = parentView.getItemAtPosition(position).toString();
+                    text = text.replaceAll(" ", "_");
+
                     Button button = (Button) findViewById(R.id.press_and_hold_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
                     long_press_name = parentView.getItemAtPosition(position).toString();
+
+                    int reference = getApplicationContext().getResources().getIdentifier(text,
+                            "drawable", getApplicationContext().getPackageName());
+
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, 0, 0);
                 }
                 ///////
                 ContentValues valuesUpdated = new ContentValues();
@@ -420,20 +456,17 @@ public class Profile_2 extends AppCompatActivity
                     isButtonConnected = true;
                     return;
                 }
-                if(isSingleClick)
-                {
-                    the_amount += 2;
-                    singleClickCounter++;
-                }
-                else if(isDoubleClick)
-                {
-                    the_amount += 3;
-                    doubleClickCounter++;
-                }
-                else if (isHold)
-                {
-                    the_amount += 5;
-                    longClickCounter++;
+                if( button.getName().equals(PARENTS_BUTTON) ) {
+                    if (isSingleClick) {
+                        the_amount += 2;
+                        singleClickCounter++;
+                    } else if (isDoubleClick) {
+                        the_amount += 3;
+                        doubleClickCounter++;
+                    } else if (isHold) {
+                        the_amount += 5;
+                        longClickCounter++;
+                    }
                 }
 
                 progress.setText("$" + the_amount);

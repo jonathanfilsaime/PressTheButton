@@ -35,7 +35,7 @@
         android:layout_marginLeft="2dp"
         android:layout_height="60dp"
         android:layout_width="60dp"
-        android:elevation="1dp"
+        android:elevation="2dp"
         android:padding="5dp"
         android:background="@drawable/blackshadow" />
 
@@ -64,7 +64,7 @@
         android:layout_height="60dp"
         android:layout_width="60dp"
         android:layout_marginLeft="72dp"
-        android:elevation="1dp"
+        android:elevation="2dp"
         android:padding="5dp"
         android:background="@drawable/blackshadow" />
 
@@ -103,7 +103,7 @@
         android:layout_height="60dp"
         android:layout_width="60dp"
         android:layout_marginLeft="212dp"
-        android:elevation="1dp"
+        android:elevation="2dp"
         android:padding="5dp"
         android:background="@drawable/blackshadow" />
 
@@ -151,7 +151,6 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:background="@drawable/first_button"
-        android:drawableLeft="@drawable/sweep"
         android:text="@string/single_click" />
 
     <!--<RelativeLayout-->
@@ -194,8 +193,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/second_spinner"
-        android:layout_alignTop="@+id/double_click_button"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/press_and_hold_button"
+        android:layout_toEndOf="@+id/scanWizardStatus" />
 
     <Button
         android:text="Button"

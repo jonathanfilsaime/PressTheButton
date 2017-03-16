@@ -1,19 +1,12 @@
 package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
-import android.app.ActivityOptions;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.FeatureGroupInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.TransitionDrawable;
-import android.support.transition.Transition;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     public ProgressBar progressBar;
     boolean isFirstTime = true;
 
-
+    public String PARENTS_BUTTON = "F022cgOY";
+    public String CHILDRENS_BUTTON = "F018cgRB";
 
     public String checkName;
     public String the_first_name;
@@ -157,11 +150,11 @@ public class MainActivity extends AppCompatActivity {
 
         //drop down list
         ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.chores, android.R.layout.simple_spinner_item);
+                R.array.adults, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> second_adapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.chores, android.R.layout.simple_spinner_item);
+                R.array.adults, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> third_adapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.chores, android.R.layout.simple_spinner_item);
+                R.array.adults, android.R.layout.simple_spinner_item);
 
         //spinners
         final Spinner first_spinner = (Spinner) findViewById(R.id.first_spinner);
@@ -195,6 +188,16 @@ public class MainActivity extends AppCompatActivity {
         first_button.setText(single_click_name);
         second_button.setText(double_click_name);
         third_button.setText(long_press_name);
+
+        int reference = getApplicationContext().getResources().getIdentifier(single_click_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        first_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_two_dollars, 0);
+        reference = getApplicationContext().getResources().getIdentifier(double_click_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        second_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_three_dollars, 0);
+        reference = getApplicationContext().getResources().getIdentifier(long_press_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        third_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_five_dollars, 0);
         //////
 
         //bluetooth permission for the button
@@ -217,9 +220,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if(++check > 1)
                 {
+                    String text = parentView.getItemAtPosition(position).toString();
+                    text = text.replaceAll(" ", "_");
+
                     Button button = (Button) findViewById(R.id.single_click_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
                     single_click_name = parentView.getItemAtPosition(position).toString();
+
+                    int reference = getApplicationContext().getResources().getIdentifier(text,
+                            "drawable", getApplicationContext().getPackageName());
+
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_two_dollars, 0);
                 }
 
                 //////////
@@ -253,9 +264,18 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
                 if (++check > 1) {
+                    String text = parentView.getItemAtPosition(position).toString();
+
+                    text = text.replaceAll(" ", "_");
+
                     Button button = (Button) findViewById(R.id.double_click_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
                     double_click_name = parentView.getItemAtPosition(position).toString();
+
+                    int reference = getApplicationContext().getResources().getIdentifier(text,
+                            "drawable", getApplicationContext().getPackageName());
+
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_three_dollars, 0);
                 }
 
                 //////
@@ -277,10 +297,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parentView)
             {
-
             }
         });
-
 
         third_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -290,9 +308,17 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
                 if (++check > 1) {
+                    String text = parentView.getItemAtPosition(position).toString();
+                    text = text.replaceAll(" ", "_");
+
                     Button button = (Button) findViewById(R.id.press_and_hold_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
                     long_press_name = parentView.getItemAtPosition(position).toString();
+
+                    int reference = getApplicationContext().getResources().getIdentifier(text,
+                            "drawable", getApplicationContext().getPackageName());
+
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_five_dollars, 0);
                 }
 
                 ///////
@@ -414,6 +440,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onButtonSingleOrDoubleClickOrHold(FlicButton button, boolean wasQueued, int timeDiff,
                                                           boolean isSingleClick, boolean isDoubleClick, boolean isHold){
+                System.out.println(button.getName());
                 if(isFirstTime)
                 {
                     isFirstTime = false;
@@ -423,20 +450,17 @@ public class MainActivity extends AppCompatActivity {
                     isButtonConnected = true;
                     return;
                 }
-                if(isSingleClick)
-                {
-                    the_amount += 2;
-                    singleClickCounter++;
-                }
-                else if(isDoubleClick)
-                {
-                    the_amount += 3;
-                    doubleClickCounter++;
-                }
-                else if (isHold)
-                {
-                    the_amount += 5;
-                    longClickCounter++;
+                if( button.getName().equals(PARENTS_BUTTON) ) {
+                    if (isSingleClick) {
+                        the_amount += 2;
+                        singleClickCounter++;
+                    } else if (isDoubleClick) {
+                        the_amount += 3;
+                        doubleClickCounter++;
+                    } else if (isHold) {
+                        the_amount += 5;
+                        longClickCounter++;
+                    }
                 }
 
                 progress.setText("$" + the_amount);
