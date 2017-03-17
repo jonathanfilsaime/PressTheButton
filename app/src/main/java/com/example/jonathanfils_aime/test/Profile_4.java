@@ -1,6 +1,7 @@
 package com.example.jonathanfils_aime.test;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,7 +28,7 @@ import io.flic.poiclib.FlicButtonMode;
 import io.flic.poiclib.FlicManager;
 import io.flic.poiclib.FlicScanWizard;
 
-public class Profile_4 extends AppCompatActivity {
+public class Profile_4 extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
     public TextView dadProfile;
     public TextView momProfile;
@@ -56,6 +58,10 @@ public class Profile_4 extends AppCompatActivity {
 
     public String PARENTS_BUTTON = "F022cgOY";
     public String CHILDRENS_BUTTON = "F018cgRB";
+
+    //////
+    public Button goalButton;
+    /////
 
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
@@ -126,6 +132,14 @@ public class Profile_4 extends AppCompatActivity {
             System.out.println("last name " + the_last_name);
             System.out.println("Amount " + the_amount);
         }
+
+        goal = (TextView) findViewById(R.id.whiteBox);
+        goal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                show();
+            }
+        });
 
 
         cursor.close();
@@ -382,6 +396,44 @@ public class Profile_4 extends AppCompatActivity {
         }
     }
 
+    public void show()
+    {
+        final Dialog d = new Dialog(Profile_4.this);
+        d.setTitle("NumberPicker");
+        d.setContentView(R.layout.dialog);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
+        np.setMaxValue(100);
+        np.setMinValue(0);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+
+        goalButton = (Button) d.findViewById(R.id.setGoal);
+
+        System.out.println("my button" + goalButton.toString());
+        goalButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                goal.setText(String.valueOf(np.getValue()));
+                ContentValues valuesUpdated = new ContentValues();
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, String.valueOf(np.getValue()));
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
+//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE, double_click_name);
+                db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '4'", null);
+                d.dismiss();
+            }
+        });
+        d.show();
+
+    }
+
     //loading profile activity
     public void startProfile1(View v)
     {
@@ -514,5 +566,10 @@ public class Profile_4 extends AppCompatActivity {
                 findViewById(R.id.scanNewButton).setEnabled(true);
             }
         });
+    }
+
+    @Override
+    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
     }
 }
