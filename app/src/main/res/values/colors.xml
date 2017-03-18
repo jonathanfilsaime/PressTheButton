@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#53ff40</color>
+    <color name="colorPrimary">#12395b</color>
+    <color name="colorPrimaryDark">#12395b</color>
+    <color name="colorAccent">#12395b</color>
     <color name="textColorPrimary">#000000</color>
     <color name="image_border_start">#40990000</color>
     <color name="image_border_end">#FF660000</color>
     <color name="image_border_center">#FFFF3333</color>
     <color name="background_color">#f2f2f2</color>
+    <color name="main_activity_background_color">#E0DEDC</color>
+    <color name="dialog_background">#d7ffffff</color>
+    <color name="usaa_light_gray">#a1b1bc</color>
 </resources>

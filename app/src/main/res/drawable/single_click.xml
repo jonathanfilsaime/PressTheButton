@@ -2,8 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/half_overlay"
-        android:drawable="@drawable/image_sweep"
-        android:width="40dp"
-        android:height="40dp"
+        android:drawable="@drawable/image_single_click"
+        android:width="10dp"
+        android:height="10dp"
+        android:top="2dp"
         />
 </layer-list>

@@ -26,7 +26,9 @@
         android:elevation="5dp"
         android:layout_above="@+id/progressBar"
         android:layout_alignStart="@+id/progressBar"
-        android:layout_alignEnd="@+id/profile2" />
+        android:layout_alignEnd="@+id/profile2"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 
     <TextView
         android:id="@+id/profile2"
@@ -74,8 +76,6 @@
         android:id="@+id/whiteBox"
         android:layout_centerHorizontal="true" />
 
-
-
     <TextView
         android:text=""
         android:layout_width="wrap_content"
@@ -84,17 +84,6 @@
         android:layout_alignParentStart="true"
         android:id="@+id/scanWizardStatus"
         />
-
-    <Button
-        android:text="Scan new button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scanNewButton"
-        android:onClick="scanNewButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp" />
-
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -109,7 +98,10 @@
         android:layout_marginBottom="34dp"
         android:layout_alignBottom="@+id/whiteBox"
         android:layout_alignStart="@+id/progress"
-        android:layout_alignEnd="@+id/goal" />
+        android:layout_alignEnd="@+id/goal"
+        android:minHeight="30dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 
     <Button
         android:id="@+id/single_click_button"
@@ -165,14 +157,16 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="20000"
+        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progress"
         android:layout_alignBottom="@+id/whiteBox"
         android:layout_toEndOf="@+id/scanWizardStatus"
         android:layout_marginStart="12dp"
-        android:elevation="3dp"/>
+        android:elevation="3dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 
     <TextView
         android:text="$1000"
@@ -182,7 +176,7 @@
         android:layout_alignBottom="@+id/whiteBox"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="14dp"
-        android:elevation="3dp"/>
-
-
+        android:elevation="3dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 </RelativeLayout>

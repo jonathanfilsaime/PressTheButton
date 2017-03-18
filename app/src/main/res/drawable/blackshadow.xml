@@ -1,13 +1,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:background ="#c0000000" android:shape = "oval" >
-
     <solid android:background ="#c0000000" />
-
-
-
     <corners
         android:bottomLeftRadius="5dp"
         android:bottomRightRadius="5dp"
         android:topLeftRadius="5dp"
         android:topRightRadius="5dp" />
-
 </shape>

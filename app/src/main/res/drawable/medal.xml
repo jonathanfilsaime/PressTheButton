@@ -2,10 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/half_overlay"
-        android:drawable="@drawable/image_dishes"
-        android:width="40dp"
-        android:height="40dp"
-        android:bottom="12dp"
-        android:left="5dp"
+        android:drawable="@drawable/image_medal"
+        android:width="250dp"
+        android:height="250dp"
         />
 </layer-list>

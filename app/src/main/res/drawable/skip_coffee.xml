@@ -5,5 +5,7 @@
         android:drawable="@drawable/image_skip_coffee"
         android:width="40dp"
         android:height="40dp"
+        android:bottom="12dp"
+        android:left="5dp"
         />
 </layer-list>

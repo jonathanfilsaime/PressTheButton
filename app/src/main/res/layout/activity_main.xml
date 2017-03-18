@@ -47,7 +47,9 @@
         android:elevation="5dp"
         android:layout_above="@+id/progressBar"
         android:layout_alignStart="@+id/progressBar"
-        android:layout_alignEnd="@+id/profile2" />
+        android:layout_alignEnd="@+id/profile2"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 
     <TextView
         android:id="@+id/profile2"
@@ -107,8 +109,6 @@
         android:padding="5dp"
         android:background="@drawable/blackshadow" />
 
-
-
     <TextView
         android:layout_marginTop="70dp"
         android:layout_width="345dp"
@@ -134,14 +134,15 @@
         style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
         android:progressDrawable="@drawable/custom_progress_bar"
         android:indeterminate="false"
-        android:max="100"
         android:elevation="3dp"
-        android:progress="20"
         android:layout_width="match_parent"
         android:layout_marginBottom="34dp"
         android:layout_alignBottom="@+id/whiteBox"
         android:layout_alignStart="@+id/progress"
-        android:layout_alignEnd="@+id/goal" />
+        android:layout_alignEnd="@+id/goal"
+        android:minHeight="30dp"
+        android:textStyle="bold"
+        android:textColor="#000000" />
 
     <Button
         android:id="@+id/single_click_button"
@@ -151,32 +152,8 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:background="@drawable/first_button"
-        android:text="@string/single_click" />
-
-    <!--<RelativeLayout-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--style="@android:style/Widget.Button"-->
-        <!--android:background="@drawable/first_button">-->
-        <!--<ImageView-->
-            <!--android:id="@+id/imageview_find_days_in_between"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/sweep" />-->
-        <!--<TextView android:text="Sweeeeeep"-->
-            <!--android:id="@+id/firstTextView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="#000"></TextView>-->
-        <!--<TextView android:textColor="#000"-->
-            <!--android:text="$$$"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/secondTextView"-->
-            <!--android:layout_width="wrap_content"></TextView>-->
-    <!--</RelativeLayout>-->
+        android:text="@string/single_click"
+        />
 
     <Button
         android:text="Button"
@@ -218,8 +195,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/first_spinner"
-        android:layout_alignTop="@+id/single_click_button"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/double_click_button"
+        android:layout_toEndOf="@+id/scanWizardStatus" />
 
     <TextView
         android:text="20000"
@@ -229,7 +206,9 @@
         android:layout_alignBottom="@+id/whiteBox"
         android:layout_toEndOf="@+id/scanWizardStatus"
         android:layout_marginStart="12dp"
-        android:elevation="3dp"/>
+        android:elevation="3dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 
     <TextView
         android:text="$1000"
@@ -239,16 +218,19 @@
         android:layout_alignBottom="@+id/whiteBox"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="14dp"
-        android:elevation="3dp"/>
+        android:elevation="3dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
 
     <Button
-        android:text="Scan new button"
+        android:text="  Scan button  "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scanNewButton"
         android:onClick="scanNewButton"
         android:layout_marginTop="16dp"
         android:layout_below="@+id/press_and_hold_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/first_button"/>
 
 </RelativeLayout>

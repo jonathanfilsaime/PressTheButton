@@ -5,5 +5,7 @@
         android:drawable="@drawable/image_take_the_bus"
         android:width="40dp"
         android:height="40dp"
+        android:bottom="12dp"
+        android:left="5dp"
         />
 </layer-list>

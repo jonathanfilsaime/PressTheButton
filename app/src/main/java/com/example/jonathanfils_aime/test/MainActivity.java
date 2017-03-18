@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +80,12 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Set the background color of the activity
+        View someView = findViewById(R.id.activity_main);
+        View root = someView.getRootView();
+        root.setBackgroundColor(getResources().getColor(R.color.main_activity_background_color));
 
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getWritableDatabase();
@@ -192,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
         //progress bar
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setMax(the_goal);
         progressBar.setProgress(the_amount);
 
         //button to activate drop down
@@ -205,21 +213,19 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         third_button.setText("Long Hold");
 
 
-        //////
         first_button.setText(single_click_name);
         second_button.setText(double_click_name);
         third_button.setText(long_press_name);
 
         int reference = getApplicationContext().getResources().getIdentifier(single_click_name.replaceAll(" ", "_"),
                 "drawable", getApplicationContext().getPackageName());
-        first_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_two_dollars, 0);
+        first_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.single_click, R.drawable.image_two_dollars, 0);
         reference = getApplicationContext().getResources().getIdentifier(double_click_name.replaceAll(" ", "_"),
                 "drawable", getApplicationContext().getPackageName());
-        second_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_three_dollars, 0);
+        second_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.double_click, R.drawable.image_three_dollars, 0);
         reference = getApplicationContext().getResources().getIdentifier(long_press_name.replaceAll(" ", "_"),
                 "drawable", getApplicationContext().getPackageName());
-        third_button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_five_dollars, 0);
-        //////
+        third_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.press_and_hold, R.drawable.image_five_dollars, 0);
 
         //bluetooth permission for the button
         requestPermissions(new String[] {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
@@ -251,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     int reference = getApplicationContext().getResources().getIdentifier(text,
                             "drawable", getApplicationContext().getPackageName());
 
-                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_two_dollars, 0);
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference,  R.drawable.single_click, R.drawable.image_two_dollars, 0);
                 }
 
                 //////////
@@ -296,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     int reference = getApplicationContext().getResources().getIdentifier(text,
                             "drawable", getApplicationContext().getPackageName());
 
-                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_three_dollars, 0);
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference,  R.drawable.double_click, R.drawable.image_three_dollars, 0);
                 }
 
                 //////
@@ -339,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     int reference = getApplicationContext().getResources().getIdentifier(text,
                             "drawable", getApplicationContext().getPackageName());
 
-                    button.setCompoundDrawablesWithIntrinsicBounds(reference, 0, R.drawable.image_five_dollars, 0);
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference,  R.drawable.press_and_hold, R.drawable.image_five_dollars, 0);
                 }
 
                 ///////
@@ -395,12 +401,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             }
         });
 
-        if( getIntent().getExtras() != null && getIntent().getExtras().getBoolean("isButtonConnected") ) {
-            isButtonConnected = true;
-        } else {
-            isButtonConnected = false;
-        }
-
         if(isButtonConnected) {
             Button scan_button = (Button) findViewById(R.id.scanNewButton);
             scan_button.setVisibility(View.GONE);
@@ -410,53 +410,55 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     public void show()
     {
         final Dialog d = new Dialog(MainActivity.this);
-        d.setTitle("NumberPicker");
         d.setContentView(R.layout.dialog);
+        d.getWindow().setBackgroundDrawableResource(R.color.dialog_background);
+
         final NumberPicker np = (NumberPicker) d.findViewById(R.id.numberPicker1);
-        np.setMaxValue(100);
+
+        np.setMaxValue(40);
         np.setMinValue(0);
         np.setWrapSelectorWheel(false);
         np.setOnValueChangedListener(this);
 
+        // Creates and sets the array of values for the NumberPicker
+        final String[] goalValues = new String[39];
+
+        for (int i = 1; i < goalValues.length + 1; i++) {
+            String number = Integer.toString(i*25);
+            goalValues[i - 1] =  number;
+        }
+        np.setDisplayedValues(goalValues);
+
         goalButton = (Button) d.findViewById(R.id.setGoal);
 
-        System.out.println("my button" + goalButton.toString());
         goalButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                goal.setText(String.valueOf(np.getValue()));
+                goal.setText("$"+ goalValues[np.getValue()] );
                 ContentValues valuesUpdated = new ContentValues();
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
-                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, String.valueOf(np.getValue()));
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE, double_click_name);
+
+                the_goal = Integer.parseInt(goalValues[np.getValue()]);
+                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
+
                 db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+
+                progressBar.setMax(the_goal);
+                progressBar.setProgress(the_amount);
+
                 d.dismiss();
             }
         });
         d.show();
-
     }
 
-
-
-    //loading profile activity
-    public void startProfile1(View v)
-    {
+    public void startProfile1(View v) {
 
     }
 
     public void startProfile2(View v)
     {
         Intent intent = new Intent(this, Profile_2.class);
-        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -465,7 +467,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     public void startProfile3(View v)
     {
         Intent intent = new Intent(this, Profile_3.class);
-        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -474,7 +475,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     public void startProfile4(View v)
     {
         Intent intent = new Intent(this, Profile_4.class);
-        intent.putExtra("isButtonConnected", isButtonConnected);
         startActivity(intent);
         overridePendingTransition(0,0);
         this.finish();
@@ -502,6 +502,10 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             public void onButtonSingleOrDoubleClickOrHold(FlicButton button, boolean wasQueued, int timeDiff,
                                                           boolean isSingleClick, boolean isDoubleClick, boolean isHold){
                 System.out.println(button.getName());
+
+                final Dialog d = new Dialog(MainActivity.this);
+                d.setContentView(R.layout.dialog_congrats);
+
                 if(isFirstTime)
                 {
                     isFirstTime = false;
@@ -521,6 +525,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     } else if (isHold) {
                         the_amount += 5;
                         longClickCounter++;
+                    }
+
+                    if(the_amount >= the_goal){
+                        d.setContentView(R.layout.dialog_congrats);
+                        d.show();
+
+                        the_amount = 0;
+
+                        ContentValues valuesUpdated = new ContentValues();
+                        valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+                        db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
                     }
                 }
 
@@ -577,8 +592,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
     @Override
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-        Log.i("value is","" + i1);
-
     }
 }
 

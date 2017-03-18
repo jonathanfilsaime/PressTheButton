@@ -2,8 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/half_overlay"
-        android:drawable="@drawable/image_trash"
-        android:width="40dp"
-        android:height="40dp"
+        android:drawable="@drawable/image_double_click"
+        android:width="20dp"
+        android:height="10dp"
+        android:top="3dp"
         />
 </layer-list>
