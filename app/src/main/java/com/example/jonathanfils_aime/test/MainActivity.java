@@ -33,45 +33,41 @@ import io.flic.poiclib.FlicScanWizard;
 
 public class MainActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
-    public TextView dadProfile;
-    public TextView momProfile;
-    public TextView child1Profile;
-    public TextView child2Profile;
     public TextView progress;
     public TextView goal;
     public boolean isButtonConnected = false;
-    public int amount = 0;
+    public boolean isFirstTime = false;
     public TextView profileName;
     public ProgressBar progressBar;
-    boolean isFirstTime = true;
-
-    public String PARENTS_BUTTON = "F022cgOY";
-    public String CHILDRENS_BUTTON = "F018cgRB";
 
     public String checkName;
     public String the_first_name;
     public String the_last_name;
 
-    /////
-    public String single_click_name = "Single Click";
-    public String double_click_name = "Double Click";
-    public String long_press_name = "Long Press";
-    ////
     public int the_phone_number;
     public int the_amount = 0;
     public int the_goal = 0;
     public int singleClickCounter;
     public int doubleClickCounter;
     public int longClickCounter;
+    private int amount_per_day = 0;
 
-    //////
-    public Button goalButton;
-    /////
+    private String single_click_name = "Single Click";
+    private String double_click_name = "Double Click";
+    private String long_press_name = "Long Press";
 
+    public String PARENTS_BUTTON = "F022cgOY";
 
+    private Button first_button;
+    private Button second_button;
+    private Button third_button ;
+    private Button goalButton;
+
+    private Spinner first_spinner;
+    private Spinner second_spinner;
+    private Spinner third_spinner;
     HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
-    //database
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
 
@@ -81,18 +77,19 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator( getResources().getDrawable(R.drawable.skip_coffee) );
 
         // Set the background color of the activity
         View someView = findViewById(R.id.activity_main);
         View root = someView.getRootView();
         root.setBackgroundColor(getResources().getColor(R.color.main_activity_background_color));
 
+        //DATABASE//////////////////////////////////////////////////////////////////////////////////
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getWritableDatabase();
 
         String testName = "Darren";
-
-
 
         //check if entry already exist
         Cursor cursor = db.rawQuery("SELECT first_name FROM records WHERE profile = '1'", null);
@@ -117,19 +114,13 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PROFILE, 1);
-
-            /////
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE, single_click_name);
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE, double_click_name);
             values.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE, long_press_name);
-            /////
-
             db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
         }
 
-
         //if exist now read an set the elements
-
         cursor = db.rawQuery("SELECT * FROM records WHERE profile = 1", null);
         while(cursor.moveToNext())
         {
@@ -141,16 +132,16 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             singleClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK));
             doubleClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK));
             longClickCounter = cursor.getInt(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS));
-
-            /////
             single_click_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE));
             double_click_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE));
             long_press_name = cursor.getString(cursor.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE));
-            ////
         }
 
-        ///////
+        cursor.close();
 
+        //END DATABASE//////////////////////////////////////////////////////////////////////////////
+
+        //TOP CARD AND PROGRESS BAR/////////////////////////////////////////////////////////////////
 
         goal = (TextView) findViewById(R.id.whiteBox);
         goal.setOnClickListener(new View.OnClickListener() {
@@ -159,84 +150,28 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                 show();
             }
         });
-        ///////
 
-        cursor.close();
-        //Activity elements
-        dadProfile = (TextView) findViewById(R.id.profile1);
-        momProfile = (TextView) findViewById(R.id.profile2);
-        child1Profile = (TextView) findViewById(R.id.profile3);
-        child2Profile = (TextView) findViewById(R.id.profile4);
-        progress = (TextView) findViewById(R.id.progress);
         goal = (TextView) findViewById(R.id.goal);
-        profileName = (TextView) findViewById(R.id.profile1name);
-
-        //set using database values
-        profileName.setText(the_first_name);
         goal.setText("$" + the_goal);
+
+        progress = (TextView) findViewById(R.id.progress);
         progress.setText("$" + the_amount);
-
-        //drop down list
-        ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.adults, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> second_adapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.adults, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> third_adapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.adults, android.R.layout.simple_spinner_item);
-
-        //spinners
-        final Spinner first_spinner = (Spinner) findViewById(R.id.first_spinner);
-        first_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        first_spinner.setAdapter(first_adapter);
-
-        final Spinner second_spinner = (Spinner) findViewById(R.id.second_spinner);
-        second_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        second_spinner.setAdapter(second_adapter);
-
-        final Spinner third_spinner = (Spinner) findViewById(R.id.third_spinner);
-        third_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        third_spinner.setAdapter(third_adapter);
-
-        //progress bar
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setMax(the_goal);
         progressBar.setProgress(the_amount);
 
-        //button to activate drop down
-        final Button first_button = (Button) findViewById(R.id.single_click_button);
-        first_button.setText("Single CLick");
+        profileName = (TextView) findViewById(R.id.profile1name);
+        profileName.setText(the_first_name);
 
-        final Button second_button = (Button) findViewById(R.id.double_click_button);
-        second_button.setText("Double Click");
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
-        final Button third_button = (Button) findViewById(R.id.press_and_hold_button);
-        third_button.setText("Long Hold");
+        //SPINNERS//////////////////////////////////////////////////////////////////////////////////
+        ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.adults, android.R.layout.simple_spinner_item);
 
-
-        first_button.setText(single_click_name);
-        second_button.setText(double_click_name);
-        third_button.setText(long_press_name);
-
-        int reference = getApplicationContext().getResources().getIdentifier(single_click_name.replaceAll(" ", "_"),
-                "drawable", getApplicationContext().getPackageName());
-        first_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.single_click, R.drawable.image_two_dollars, 0);
-        reference = getApplicationContext().getResources().getIdentifier(double_click_name.replaceAll(" ", "_"),
-                "drawable", getApplicationContext().getPackageName());
-        second_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.double_click, R.drawable.image_three_dollars, 0);
-        reference = getApplicationContext().getResources().getIdentifier(long_press_name.replaceAll(" ", "_"),
-                "drawable", getApplicationContext().getPackageName());
-        third_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.press_and_hold, R.drawable.image_five_dollars, 0);
-
-        //bluetooth permission for the button
-        requestPermissions(new String[] {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
-                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 4);
-
-        //flic button
-        for (FlicButton button : FlicManager.getManager().getKnownButtons())
-        {
-            setupEventListenerForButtonInActivity(button);
-        }
-
+        first_spinner = (Spinner) findViewById(R.id.first_spinner);
+        first_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        first_spinner.setAdapter(first_adapter);
 
         first_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -260,20 +195,9 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     button.setCompoundDrawablesWithIntrinsicBounds(reference,  R.drawable.single_click, R.drawable.image_two_dollars, 0);
                 }
 
-                //////////
                 ContentValues valuesUpdated = new ContentValues();
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
                 valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK_CHOICE, single_click_name);
                 db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
-                ////////
             }
 
             @Override
@@ -282,6 +206,12 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             }
         });
 
+        ArrayAdapter<CharSequence> second_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.adults, android.R.layout.simple_spinner_item);
+
+        second_spinner = (Spinner) findViewById(R.id.second_spinner);
+        second_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        second_spinner.setAdapter(second_adapter);
 
         second_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -305,20 +235,9 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     button.setCompoundDrawablesWithIntrinsicBounds(reference,  R.drawable.double_click, R.drawable.image_three_dollars, 0);
                 }
 
-                //////
                 ContentValues valuesUpdated = new ContentValues();
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
                 valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK_CHOICE, double_click_name);
                 db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
-                /////
             }
 
             @Override
@@ -327,41 +246,37 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             }
         });
 
+        ArrayAdapter<CharSequence> third_adapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.adults, android.R.layout.simple_spinner_item);
+
+        third_spinner = (Spinner) findViewById(R.id.third_spinner);
+        third_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        third_spinner.setAdapter(third_adapter);
+
         third_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             int check = 0;
 
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
                 if (++check > 1) {
                     String text = parentView.getItemAtPosition(position).toString();
                     text = text.replaceAll(" ", "_");
 
                     Button button = (Button) findViewById(R.id.press_and_hold_button);
                     button.setText(parentView.getItemAtPosition(position).toString());
+
                     long_press_name = parentView.getItemAtPosition(position).toString();
 
                     int reference = getApplicationContext().getResources().getIdentifier(text,
                             "drawable", getApplicationContext().getPackageName());
 
-                    button.setCompoundDrawablesWithIntrinsicBounds(reference,  R.drawable.press_and_hold, R.drawable.image_five_dollars, 0);
+                    button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.press_and_hold, R.drawable.image_five_dollars, 0);
                 }
 
-                ///////
                 ContentValues valuesUpdated = new ContentValues();
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_FIRST_NAME, "Darren");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LAST_NAME, "Smith");
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_PHONE_NUMBER, 469-999-7777);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_GOAL, the_goal);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_SINGLE_CLICK, singleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_DOUBLE_CLICK, doubleClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
-//                valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS, longClickCounter);
                 valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LONG_PRESS_CLICK_CHOICE, long_press_name);
                 db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
-                //////
             }
 
             @Override
@@ -375,7 +290,47 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         second_spinner.setVisibility(View.INVISIBLE);
         third_spinner.setVisibility(View.INVISIBLE);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
+        //BUTTONS FOR SPINNERS /////////////////////////////////////////////////////////////////////
+        first_button = (Button) findViewById(R.id.single_click_button);
+        first_button.setText("Single CLick");
+
+        second_button = (Button) findViewById(R.id.double_click_button);
+        second_button.setText("Double Click");
+
+        third_button = (Button) findViewById(R.id.press_and_hold_button);
+        third_button.setText("Long Hold");
+
+        first_button.setText(single_click_name);
+        second_button.setText(double_click_name);
+        third_button.setText(long_press_name);
+
+        int reference = getApplicationContext().getResources().getIdentifier(single_click_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        first_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.single_click, R.drawable.image_two_dollars, 0);
+        reference = getApplicationContext().getResources().getIdentifier(double_click_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        second_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.double_click, R.drawable.image_three_dollars, 0);
+        reference = getApplicationContext().getResources().getIdentifier(long_press_name.replaceAll(" ", "_"),
+                "drawable", getApplicationContext().getPackageName());
+        third_button.setCompoundDrawablesWithIntrinsicBounds(reference, R.drawable.press_and_hold, R.drawable.image_five_dollars, 0);
+
+        first_button.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                first_spinner.performClick();
+            }
+        });
+
+        second_button.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                second_spinner.performClick();
+            }
+        });
 
         first_button.setOnClickListener(new View.OnClickListener()
         {
@@ -404,6 +359,18 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         if(isButtonConnected) {
             Button scan_button = (Button) findViewById(R.id.scanNewButton);
             scan_button.setVisibility(View.GONE);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        //bluetooth permission for the button
+        requestPermissions(new String[] {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 4);
+
+        //flic button
+        for (FlicButton button : FlicManager.getManager().getKnownButtons())
+        {
+            setupEventListenerForButtonInActivity(button);
         }
     }
 
@@ -516,26 +483,33 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     return;
                 }
                 if( button.getName().equals(PARENTS_BUTTON) ) {
-                    if (isSingleClick) {
-                        the_amount += 2;
-                        singleClickCounter++;
-                    } else if (isDoubleClick) {
-                        the_amount += 3;
-                        doubleClickCounter++;
-                    } else if (isHold) {
-                        the_amount += 5;
-                        longClickCounter++;
-                    }
+                    if(amount_per_day < 10) {
+                        if (isSingleClick) {
+                            the_amount += 2;
+                            amount_per_day += 2;
+                            singleClickCounter++;
+                        } else if (isDoubleClick) {
+                            the_amount += 3;
+                            amount_per_day += 3;
+                            doubleClickCounter++;
+                        } else if (isHold) {
+                            the_amount += 5;
+                            amount_per_day += 5;
+                            longClickCounter++;
+                        }
 
-                    if(the_amount >= the_goal){
-                        d.setContentView(R.layout.dialog_congrats);
-                        d.show();
+                        if (the_amount >= the_goal) {
+                            d.setContentView(R.layout.dialog_congrats);
+                            d.show();
 
-                        the_amount = 0;
+                            the_amount = 0;
 
-                        ContentValues valuesUpdated = new ContentValues();
-                        valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
-                        db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                            ContentValues valuesUpdated = new ContentValues();
+                            valuesUpdated.put(FeedReaderContract.FeedEntry.COLUMN_NAME_CURRENT, the_amount);
+                            db.update(FeedReaderContract.FeedEntry.TABLE_NAME, valuesUpdated, "profile = '1'", null);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Cannot transfer more than $10 per day", Toast.LENGTH_LONG).show();
                     }
                 }
 

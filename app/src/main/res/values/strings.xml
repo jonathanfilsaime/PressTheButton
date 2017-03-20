@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Family Savings</string>
-    <string name="single_click">Sweep</string>
+    <string name="app_name">Click2Cache</string>
+    <string name="single_click"></string>
     <string-array name="chores">
         <item>sweep kitchen</item>
         <item>take out trash</item>

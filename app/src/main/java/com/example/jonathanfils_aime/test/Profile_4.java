@@ -61,10 +61,8 @@ public class Profile_4 extends AppCompatActivity implements NumberPicker.OnValue
     private Spinner second_spinner;
     private Spinner third_spinner;
 
-    // Flic
     private HashMap<FlicButton, FlicButtonListener> listeners = new HashMap<>();
 
-    // Database
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase db;
 
@@ -151,6 +149,8 @@ public class Profile_4 extends AppCompatActivity implements NumberPicker.OnValue
 
         profileName = (TextView) findViewById(R.id.profile4name);
         profileName.setText(the_first_name);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
         //SPINNERS//////////////////////////////////////////////////////////////////////////////////
         ArrayAdapter<CharSequence> first_adapter = ArrayAdapter.createFromResource(Profile_4.this,
