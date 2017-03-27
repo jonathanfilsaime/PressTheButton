@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeAsUpIndicator( getResources().getDrawable(R.drawable.skip_coffee) );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator( getResources().getDrawable(R.drawable.logo) );
 
         // Set the background color of the activity
         View someView = findViewById(R.id.activity_main);
@@ -152,6 +152,9 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         });
 
         goal = (TextView) findViewById(R.id.goal);
+        if(the_goal == 0){
+            the_goal = 25;
+        }
         goal.setText("$" + the_goal);
 
         progress = (TextView) findViewById(R.id.progress);

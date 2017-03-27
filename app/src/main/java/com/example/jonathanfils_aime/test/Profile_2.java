@@ -75,6 +75,9 @@ public class Profile_2 extends AppCompatActivity implements NumberPicker.OnValue
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_2);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator( getResources().getDrawable(R.drawable.logo) );
+
         // Set the background color of the activity
         View someView = findViewById(R.id.activity_main);
         View root = someView.getRootView();
@@ -145,6 +148,9 @@ public class Profile_2 extends AppCompatActivity implements NumberPicker.OnValue
         });
 
         goal = (TextView) findViewById(R.id.goal);
+        if(the_goal == 0){
+            the_goal = 25;
+        }
         goal.setText("$" + the_goal);
 
         progress = (TextView) findViewById(R.id.progress);
